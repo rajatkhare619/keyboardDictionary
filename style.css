@@ -1,0 +1,31 @@
+html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #7CD8D5;
+}
+
+div:nth-child(1) {
+    border: solid #f24c4e 2px;
+    border-radius: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+    font-family: 'Acme', sans-serif;
+    margin-left: 30%;
+    background-color: #99d3df;
+
+}
+
+p {
+    text-align: center;
+}
+
+div:nth-child(2) {
+    border: solid #f24c4e 2px;
+    border-radius: 10px;
+    width: 500px;
+    font-family: 'Sunshiney', cursive;
+    background-color: #99d3df;
+
+}

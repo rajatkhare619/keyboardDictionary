@@ -1,44 +1,46 @@
 
-    /*function playSound(e) {
-     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-     if(!audio) return;
-     audio.currentTime=0;
-     audio.play();
-     key.classList.add('playing');
-     }
-     function removeTransition(e) {
-     if (e.propertyName !== 'transform') return;
-     this.classList.remove('playing');
-     }
-     const keys = document.querySelectorAll('.key');
-     keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+/*function playSound(e) {
+ const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+ const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+ if(!audio) return;
+ audio.currentTime=0;
+ audio.play();
+ key.classList.add('playing');
+ }
+ function removeTransition(e) {
+ if (e.propertyName !== 'transform') return;
+ this.classList.remove('playing');
+ }
+ const keys = document.querySelectorAll('.key');
+ keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
-     window.addEventListener('keydown', playSound);
-     const key = 'j4501LfAVU4y08rGuS1UKeGfTUlICrtG';
-     */
-    window.addEventListener('keydown', getWord);
+ window.addEventListener('keydown', playSound);
+ const key = 'j4501LfAVU4y08rGuS1UKeGfTUlICrtG';
+ */
+window.addEventListener('keydown', getWord);
 
 function getWord(e) {
     const xhr = new XMLHttpRequest();
-
-
     xhr.open('GET', 'https://wordsapiv1.p.mashape.com/words/?letterPattern=^' + e.key +'[a-zA-Z]*$&random=true', true);
-    // xhr.open('GET', 'https://wordsapiv1.p.mashape.com/words/' + word, true);
-
     xhr.setRequestHeader('X-Mashape-Authorization', 'S2yzcnfzJYmshP9lPEbZ0hqUvB6zp1u4Z1MjsnDNehu39QOUD5');
-
     xhr.send();
     xhr.addEventListener('readystatechange', processRequest, false);
-
     function processRequest() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             //console.log(response.results.data[43]);
             word = response.word;
-            console.log(word);
             if (response.hasOwnProperty('results')) {
-                console.log(response.results[0].definition);
+                document.getElementById('word').textContent = word;
+                try {
+                    document.getElementById('meaning').textContent = response.results[0].definition;
+                }
+                catch (ex) {
+                    document.getElementById('word').textContent = 'Invalid key';
+
+                    document.getElementById('meaning').textContent = 'Please press only alphabetical or number keys';
+                }
+                console.log(response.results);
             } else {
                 console.log('no def');
                 getWord(e);
@@ -47,7 +49,6 @@ function getWord(e) {
             console.log(xhr.status);
         }
     }
-    //  return res;
 }
 let res='';
 let word = '';
